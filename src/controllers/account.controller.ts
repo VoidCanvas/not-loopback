@@ -1,0 +1,50 @@
+import {
+  repository,
+} from '@loopback/repository';
+import {
+  post,
+  requestBody,
+  api
+} from '@loopback/rest';
+import { User, RegisterRq, LoginRq } from '../models';
+import { UserRepository } from '../repositories';
+
+@api({
+  basePath: '/api/account',
+  paths: {}
+})
+export class AccountController {
+
+  constructor(
+    @repository(UserRepository)
+    public userRepository: UserRepository,
+  ) { }
+
+  @post('/register', {
+    responses: {
+      '200': {
+        description: 'To register a new user.',
+        content: { 'application/json': { schema: { 'x-ts-type': RegisterRq } } },
+      },
+    },
+  })
+  async register(
+    @requestBody() reg: RegisterRq
+  ): Promise<User> {
+    return await this.userRepository.register(reg.username, reg.password);
+  }
+
+  @post('/login', {
+    responses: {
+      '200': {
+        description: 'To login an existing user',
+        content: { 'application/json': { schema: { 'x-ts-type': LoginRq } } },
+      },
+    },
+  })
+  async login(
+    @requestBody() login: LoginRq
+  ): Promise<boolean> {
+    return await this.userRepository.login(login.username, login.password);
+  }
+}

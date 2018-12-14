@@ -51,11 +51,16 @@
     "@loopback/repository": "^1.0.6",
     "@loopback/rest": "^1.4.0",
     "@loopback/rest-explorer": "^1.1.2",
-    "@loopback/service-proxy": "^1.0.3"
+    "@loopback/service-proxy": "^1.0.3",
+    "bcrypt": "^3.0.2",
+    "loopback-connector-postgresql": "^3.5.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@loopback/build": "^1.0.1",
     "@loopback/testlab": "^1.0.1",
-    "@types/node": "^10.11.2"
+    "@types/bcrypt": "^3.0.0",
+    "@types/node": "^10.11.2",
+    "@types/uuid": "^3.4.4"
   }
 }

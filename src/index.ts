@@ -1,7 +1,7 @@
-import {Lb4BoilerplateApplication} from './application';
-import {ApplicationConfig} from '@loopback/core';
+import { Lb4BoilerplateApplication } from './application';
+import { ApplicationConfig } from '@loopback/core';
 
-export {Lb4BoilerplateApplication};
+export { Lb4BoilerplateApplication };
 
 export async function main(options: ApplicationConfig = {}) {
   const app = new Lb4BoilerplateApplication(options);
