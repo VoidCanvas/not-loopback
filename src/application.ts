@@ -9,12 +9,19 @@ import { RestApplication } from '@loopback/rest';
 import { ServiceMixin } from '@loopback/service-proxy';
 import * as path from 'path';
 import { MySequence } from './sequence';
+import { AuthenticationBindings, AuthenticationComponent } from '@loopback/authentication';
+import { CustomAuthStrategyProvider } from './authentication/strategy';
 
 export class Lb4BoilerplateApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    this.component(AuthenticationComponent);
+    this.bind(AuthenticationBindings.STRATEGY).toProvider(
+      CustomAuthStrategyProvider,
+    );
 
     // Set up the custom sequence
     this.sequence(MySequence);

@@ -4,9 +4,9 @@ import {
 import {
   post,
   requestBody,
-  api
+  api,
 } from '@loopback/rest';
-import { User, RegisterRq, LoginRq } from '../models';
+import { User, RegisterRq, LoginRq, AccessToken } from '../models';
 import { UserRepository } from '../repositories';
 
 @api({
@@ -17,7 +17,7 @@ export class AccountController {
 
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public accountRepository: UserRepository,
   ) { }
 
   @post('/register', {
@@ -31,7 +31,7 @@ export class AccountController {
   async register(
     @requestBody() reg: RegisterRq
   ): Promise<User> {
-    return await this.userRepository.register(reg.username, reg.password);
+    return await this.accountRepository.register(reg.username, reg.password);
   }
 
   @post('/login', {
@@ -44,7 +44,7 @@ export class AccountController {
   })
   async login(
     @requestBody() login: LoginRq
-  ): Promise<boolean> {
-    return await this.userRepository.login(login.username, login.password);
+  ): Promise<AccessToken> {
+    return await this.accountRepository.login(login.username, login.password);
   }
 }
