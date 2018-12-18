@@ -5,7 +5,7 @@ import {
   AuthenticationMetadata,
 } from '@loopback/authentication';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
-import { AccessToken, User } from '../models';
+import { AccessToken, User } from '../../models';
 
 export class CustomAuthStrategyProvider implements Provider<Strategy | undefined> {
   constructor(

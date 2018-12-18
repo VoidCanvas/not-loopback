@@ -10,7 +10,7 @@ import { ServiceMixin } from '@loopback/service-proxy';
 import * as path from 'path';
 import { MySequence } from './sequence';
 import { AuthenticationBindings, AuthenticationComponent } from '@loopback/authentication';
-import { CustomAuthStrategyProvider } from './authentication/strategy';
+import { CustomAuthStrategyProvider } from './core/authentication/strategy';
 
 export class Lb4BoilerplateApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),

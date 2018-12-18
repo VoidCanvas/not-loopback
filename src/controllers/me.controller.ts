@@ -4,7 +4,7 @@ import {
 } from '@loopback/rest';
 import { User } from '../models';
 import { AuthenticationBindings } from '@loopback/authentication';
-import { auth } from '../authentication/decorators';
+import { auth } from '../core/auth.decorators';
 import { inject } from '@loopback/context';
 
 @api({

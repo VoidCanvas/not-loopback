@@ -1,4 +1,4 @@
-import { model, property } from '../../not-loopback/model.decorators';
+import { model, property } from '../../core/model.decorators';
 import { Base } from '../';
 
 @model()

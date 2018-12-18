@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-} from '../not-loopback/model.decorators';
+} from '../core/model.decorators';
 import { BaseEntity } from './';
 
 @Entity('users', { schema: 'public' })
