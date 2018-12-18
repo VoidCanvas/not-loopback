@@ -1,4 +1,4 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column } from '../not-loopback/model.decorators';
 import { BaseEntity } from './';
 
 @Entity()

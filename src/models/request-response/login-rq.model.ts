@@ -1,9 +1,10 @@
-// import { model, property } from '@loopback/repository';
+import { model, property } from '../../not-loopback/model.decorators';
 import { Base } from '../';
 
+@model()
 export class LoginRq extends Base {
-  username: string;
-  password: string;
+  @property() username: string;
+  @property() password: string;
   constructor(data?: Partial<LoginRq>) {
     super(data);
   }

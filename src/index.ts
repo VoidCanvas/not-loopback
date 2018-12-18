@@ -4,11 +4,13 @@ import { createConnection } from 'typeorm';
 
 export { Lb4BoilerplateApplication };
 
-import { User, AccessToken } from './models'
+import * as Models from './models'
+
+const entities = Object.keys(Models).map(key => (Models as any)[key]); // tslint:disable-line
 
 export async function setupEntities() {
   return createConnection({
-    entities: [User, AccessToken],
+    entities,
     type: 'postgres',
     host: 'localhost',
     port: 5432,

@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-} from 'typeorm';
+} from '../not-loopback/model.decorators';
 import { BaseEntity } from './';
 
 @Entity('users', { schema: 'public' })

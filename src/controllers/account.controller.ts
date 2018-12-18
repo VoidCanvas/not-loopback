@@ -6,7 +6,7 @@ import {
   requestBody,
   api,
 } from '@loopback/rest';
-import { User, RegisterRq, LoginRq, AccessToken } from '../models';
+import { User, LoginRq, AccessToken } from '../models';
 import { accountService } from '../services/account.service';
 
 @api({
@@ -19,12 +19,12 @@ export class AccountController {
     responses: {
       '200': {
         description: 'To register a new user.',
-        content: { 'application/json': { schema: { 'x-ts-type': RegisterRq } } },
+        content: { 'application/json': { schema: { 'x-ts-type': User } } },
       },
     },
   })
   async register(
-    @requestBody() reg: RegisterRq
+    @requestBody() reg: User
   ): Promise<User> {
     return await accountService.register(reg.username, reg.password);
   }
