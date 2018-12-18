@@ -1,12 +1,13 @@
-import { Entity, model, property } from '@loopback/repository';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from './';
 
-@model()
-export class AccessToken extends Entity {
-  @property({ id: true }) id: string;
-  @property() token: string;
-  @property() userId: string;
-  @property() ttl: number;
-  @property() type: string;
+@Entity()
+export class AccessToken extends BaseEntity<AccessToken> {
+  @Column({ primary: true }) id: string;
+  @Column() token: string;
+  @Column({ name: 'user_id' }) userId: string;
+  @Column() ttl: number;
+  @Column() type: string;
 
   constructor(data?: Partial<AccessToken>) {
     super(data);

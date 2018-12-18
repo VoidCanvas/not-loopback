@@ -1,10 +1,9 @@
-import { BaseModel } from '..';
-import { model, property } from '@loopback/repository';
+// import { model, property } from '@loopback/repository';
+import { Base } from '../';
 
-@model()
-export class LoginRq extends BaseModel {
-  @property() username: string;
-  @property() password: string;
+export class LoginRq extends Base {
+  username: string;
+  password: string;
   constructor(data?: Partial<LoginRq>) {
     super(data);
   }

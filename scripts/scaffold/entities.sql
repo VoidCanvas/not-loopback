@@ -16,14 +16,15 @@ CREATE TABLE users (
 );
 
 -- All about access tokens
-CREATE TYPE accessTokenType AS ENUM ('DEFAULT', 'FACEBOOK', 'GOOGLE', 'TWITTER', 'LINKEDIN');
+CREATE TYPE access_token_type AS ENUM ('DEFAULT', 'FACEBOOK', 'GOOGLE', 'TWITTER', 'LINKEDIN');
 DROP TABLE IF EXISTS accessToken;
 CREATE TABLE accessToken (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     token VARCHAR NOT NULL,
-    userId UUID NOT NULL REFERENCES users (id),
+    user_id UUID NOT NULL REFERENCES users (id),
     ttl INTEGER NOT NULL DEFAULT 100000,
-    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    type accessTokenType default 'DEFAULT',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    type access_token_type default 'DEFAULT',
     UNIQUE(id)
 );

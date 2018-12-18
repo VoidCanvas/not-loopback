@@ -3,20 +3,14 @@ import { Strategy } from 'passport';
 import {
   AuthenticationBindings,
   AuthenticationMetadata,
-  UserProfile,
 } from '@loopback/authentication';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
-import { AccessTokenRepository, UserRepository } from '../repositories';
-import { repository } from '@loopback/repository';
+import { AccessToken, User } from '../models';
 
 export class CustomAuthStrategyProvider implements Provider<Strategy | undefined> {
   constructor(
     @inject(AuthenticationBindings.METADATA)
     private metadata: AuthenticationMetadata,
-    @repository(AccessTokenRepository)
-    private accessTokenRepository: AccessTokenRepository,
-    @repository(UserRepository)
-    private userRepository: UserRepository,
   ) {
   }
 
@@ -35,15 +29,15 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
 
   async verify(
     token: string,
-    cb: (err: Error | null, user?: UserProfile | false) => void,
+    cb: (err: Error | null, user?: User | false) => void,
   ) {
-    const accessToken = await this.accessTokenRepository.findOne({
+    const accessToken = await AccessToken.findOne<AccessToken>({
       where: {
         token
       }
     });
     if (accessToken) {
-      const user = await this.userRepository.findById(accessToken.userId);
+      const user = await User.findById<User>(accessToken.userId);
       cb(null, (user || false));
     }
     cb(null, false) // when auth token found
