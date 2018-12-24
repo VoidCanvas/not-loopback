@@ -1,0 +1,5 @@
+{
+  "datasource": {
+    "default": "postgres"
+  }
+}

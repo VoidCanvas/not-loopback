@@ -11,14 +11,26 @@ import {
   property as r_property
 } from '@loopback/repository';
 import { ColumnEmbeddedOptions } from 'typeorm/decorator/options/ColumnEmbeddedOptions';
+import defaultDataSource from '../datasources/default';
 
 export const model = r_model;
 export const property = r_property;
 
+// extended options
+interface CustomEntityOptions extends EntityOptions {
+  datasourceConfig?: Object;
+}
+
+// maps to hold model config
+const MODEL_MAP = new Map();
+export function getModelMap() {
+  return MODEL_MAP;
+}
+
 // Entity - to take care of Entity of typeorm and model of loopback/repository
-export function Entity(options?: EntityOptions): Function;
-export function Entity(name?: string, options?: EntityOptions): Function;
-export function Entity(nameOrOptions?: string | EntityOptions, maybeOptions?: EntityOptions): Function {
+export function Entity(options?: CustomEntityOptions): Function;
+export function Entity(name?: string, options?: CustomEntityOptions): Function;
+export function Entity(nameOrOptions?: string | CustomEntityOptions, maybeOptions?: CustomEntityOptions): Function {
   const options = (typeof nameOrOptions === "object" ? nameOrOptions : maybeOptions) || {};
   const name = typeof nameOrOptions === "string" ? nameOrOptions : options.name;
 
@@ -27,6 +39,9 @@ export function Entity(nameOrOptions?: string | EntityOptions, maybeOptions?: En
 
   return (target: Function) => {
     r_model_fn(target);
+    MODEL_MAP.set(target, {
+      datasourceConfig: options.datasourceConfig || defaultDataSource
+    });
     return t_Entity_fn(target);
   }
 }
