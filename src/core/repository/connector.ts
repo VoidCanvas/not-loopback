@@ -8,7 +8,6 @@ export const connectDataSource = async () => {
   const dataSourcesRepresentation: {
     [key: string]: Object
   } = {};
-
   const ModelMap = getModelMap();
   ModelMap.forEach((config, Model) => {
     const entities = dataSourcesWiseEntityRepresentation[config.datasourceConfig.name] || [];
@@ -19,7 +18,6 @@ export const connectDataSource = async () => {
   Object.keys(dataSourcesWiseEntityRepresentation).forEach(async (key) => {
     const entities = dataSourcesWiseEntityRepresentation[key];
     const config = dataSourcesRepresentation[key];
-
     await createConnection({
       entities,
       type: 'postgres',

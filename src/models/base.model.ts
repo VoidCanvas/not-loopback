@@ -1,7 +1,9 @@
 import { getConnectionManager, Column, getRepository, FindOneOptions } from 'typeorm';
+import { getModelMap } from '../core';
 
-export function getManager() {
-  return getConnectionManager().get('default').manager;
+export function getManager(classFn: Function) {
+  const entityConfig = getModelMap().get(classFn);
+  return getConnectionManager().get(entityConfig.datasourceConfig.name || 'default').manager;
 }
 
 // This is a fix for a typeorm bug
@@ -49,7 +51,9 @@ export class BaseEntity<T> extends Base {
   updatedAt: Date;
 
   async save(): Promise<T> {
-    const manager = getManager();
+    const manager = getManager(this.constructor);
+    console.log(">>> here babes2")
+
     const result = await manager.save((this as any)); // tslint:disable-line
     return (result as T);
   }

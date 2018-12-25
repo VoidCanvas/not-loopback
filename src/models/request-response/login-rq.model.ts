@@ -1,4 +1,4 @@
-import { model, property } from '../../core/model.decorators';
+import { model, property } from '../../core';
 import { Base } from '../';
 
 @model()

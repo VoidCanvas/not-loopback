@@ -1,3 +1,4 @@
+// typeorm helpers
 import {
   Entity as t_Entity,
   Column as t_Column,
@@ -6,6 +7,7 @@ import {
   ColumnType,
 } from 'typeorm';
 
+// loopback helpers
 import {
   model as r_model,
   property as r_property
@@ -13,8 +15,6 @@ import {
 import { ColumnEmbeddedOptions } from 'typeorm/decorator/options/ColumnEmbeddedOptions';
 import defaultDataSource from '../datasources/default';
 
-export const model = r_model;
-export const property = r_property;
 
 // extended options
 interface CustomEntityOptions extends EntityOptions {
@@ -66,7 +66,7 @@ export function Column(
   if (!options) options = {} as ColumnOptions;
   options.type = type;
 
-
+  // making use of the decorators of typeorm and loopback
   const t_Column_fn = t_Column(options)
   const r_property_fn = r_property();
 
@@ -75,3 +75,7 @@ export function Column(
     return t_Column_fn(target, propertyKey, descriptor);
   }
 }
+
+// some default exports
+export const model = r_model;
+export const property = r_property;

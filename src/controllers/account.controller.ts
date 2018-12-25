@@ -1,18 +1,12 @@
 import {
-  repository,
-} from '@loopback/repository';
-import {
   post,
   requestBody,
-  api,
 } from '@loopback/rest';
 import { User, LoginRq, AccessToken } from '../models';
 import { accountService } from '../services/account.service';
+import { api } from '../core';
 
-@api({
-  basePath: '/api/account',
-  paths: {}
-})
+@api()
 export class AccountController {
 
   @post('/register', {
@@ -33,7 +27,7 @@ export class AccountController {
     responses: {
       '200': {
         description: 'To login an existing user',
-        content: { 'application/json': { schema: { 'x-ts-type': LoginRq } } },
+        content: { 'application/json': { schema: { 'x-ts-type': AccessToken } } },
       },
     },
   })

@@ -1,4 +1,4 @@
-import { Entity, Column } from '../core/model.decorators';
+import { Entity, Column } from '../core';
 import { BaseEntity } from './';
 
 @Entity()
