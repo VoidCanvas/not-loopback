@@ -68,7 +68,9 @@ export function Column(
 
   // making use of the decorators of typeorm and loopback
   const t_Column_fn = t_Column(options)
-  const r_property_fn = r_property();
+  const r_property_fn = r_property({
+    required: !options.nullable
+  });
 
   return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<{}>) => {
     r_property_fn(target, propertyKey);

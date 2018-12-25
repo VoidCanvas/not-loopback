@@ -1,9 +1,12 @@
 import { getConnectionManager, Column, getRepository, FindOneOptions } from 'typeorm';
 import { getModelMap } from '../core';
 
-export function getManager(classFn: Function) {
+function getConnectionName(classFn: Function) {
   const entityConfig = getModelMap().get(classFn);
-  return getConnectionManager().get(entityConfig.datasourceConfig.name || 'default').manager;
+  return (entityConfig && entityConfig.datasourceConfig.name) || 'default';
+}
+function getManager(classFn: Function) {
+  return getConnectionManager().get(getConnectionName(classFn)).manager;
 }
 
 // This is a fix for a typeorm bug
@@ -52,14 +55,12 @@ export class BaseEntity<T> extends Base {
 
   async save(): Promise<T> {
     const manager = getManager(this.constructor);
-    console.log(">>> here babes2")
-
     const result = await manager.save((this as any)); // tslint:disable-line
     return (result as T);
   }
 
   static async findById<T>(id: string): Promise<T | undefined> {
-    const result = await getRepository<T>(this)
+    const result = await getRepository<T>(this, getConnectionName(this))
       .createQueryBuilder('base')
       .where(`base.id = :id`, { id })
       .getOne();
@@ -68,20 +69,20 @@ export class BaseEntity<T> extends Base {
 
   // to fetch one record
   static async findOne<T>(obj?: FindOneOptions<T>): Promise<T | undefined> {
-    const result = await getRepository<T>(this).findOne(restoreProto(obj));
+    const result = await getRepository<T>(this, getConnectionName(this)).findOne(restoreProto(obj));
     return result;
   }
 
   // to fetch one record
   static async findOneOrFail<T>(obj?: FindOneOptions<T>): Promise<T | undefined> {
-    const result = await getRepository<T>(this).findOneOrFail(restoreProto(obj));
+    const result = await getRepository<T>(this, getConnectionName(this)).findOneOrFail(restoreProto(obj));
     return result;
   }
 
   // to fetch records
   static async find<T>(obj?: FindOneOptions<T>): Promise<T[]> {
     // obj is eating __proto__
-    const result = await getRepository<T>(this).find(restoreProto<T>(obj));
+    const result = await getRepository<T>(this, getConnectionName(this)).find(restoreProto<T>(obj));
     return result;
   }
 }

@@ -1,6 +1,7 @@
 import {
   post,
   requestBody,
+  HttpErrors
 } from '@loopback/rest';
 import { User, LoginRq, AccessToken } from '../models';
 import { accountService } from '../services/account.service';
@@ -8,7 +9,6 @@ import { api } from '../core';
 
 @api()
 export class AccountController {
-
   @post('/register', {
     responses: {
       '200': {
@@ -18,7 +18,7 @@ export class AccountController {
     },
   })
   async register(
-    @requestBody() reg: User
+    @requestBody({ required: true }) reg: User
   ): Promise<User> {
     return await accountService.register(reg.username, reg.password);
   }
@@ -32,8 +32,12 @@ export class AccountController {
     },
   })
   async login(
-    @requestBody() login: LoginRq
+    @requestBody({ required: true }) login: LoginRq
   ): Promise<AccessToken> {
-    return await accountService.login(login.username, login.password);
+    const accessToken = await accountService.login(login.username, login.password);
+    if (!accessToken.token) {
+      throw new HttpErrors.Unauthorized('username password did not match');
+    }
+    return accessToken;
   }
 }
