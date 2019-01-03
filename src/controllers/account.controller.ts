@@ -1,21 +1,17 @@
 import {
-  post,
   requestBody,
   HttpErrors
 } from '@loopback/rest';
 import { User, LoginRq, AccessToken, RegisterRq } from '../models';
 import { accountService } from '../services/account.service';
-import { api } from '../core';
+import { api, post } from '../core';
 
 @api()
 export class AccountController {
-  @post('/register', {
-    responses: {
-      '200': {
-        description: 'To register a new user.',
-        content: { 'application/json': { schema: { 'x-ts-type': User } } },
-      },
-    },
+  @post({
+    path: '/register',
+    description: 'To register a new user',
+    returnType: User
   })
   async register(
     @requestBody({ required: true }) reg: RegisterRq
@@ -23,13 +19,10 @@ export class AccountController {
     return await accountService.register(reg.username, reg.password);
   }
 
-  @post('/login', {
-    responses: {
-      '200': {
-        description: 'To login an existing user',
-        content: { 'application/json': { schema: { 'x-ts-type': AccessToken } } },
-      },
-    },
+  @post({
+    path: '/login',
+    description: 'To login an existing user',
+    returnType: AccessToken
   })
   async login(
     @requestBody({ required: true }) login: LoginRq
