@@ -1,4 +1,4 @@
-import { User, AccessToken } from '../models';
+import { User, AccessToken, UserDetails } from '../models';
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 import uuid = require('uuid');
 const BCRYPT_SALT_ROUNDS = 10;
@@ -9,9 +9,13 @@ export class AccountService {
   async register(username: string, password: string): Promise<User> {
     const user = new User({
       username,
-      password: hashSync(password, salt)
+      password: hashSync(password, salt),
     });
-    return user.save();
+    await user.save();
+    const details = new UserDetails({ userId: user.id });
+    await details.save();
+    user.details = details;
+    return user;
   }
 
   // login to get the access token

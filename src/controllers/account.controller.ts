@@ -3,7 +3,7 @@ import {
   requestBody,
   HttpErrors
 } from '@loopback/rest';
-import { User, LoginRq, AccessToken } from '../models';
+import { User, LoginRq, AccessToken, RegisterRq } from '../models';
 import { accountService } from '../services/account.service';
 import { api } from '../core';
 
@@ -18,7 +18,7 @@ export class AccountController {
     },
   })
   async register(
-    @requestBody({ required: true }) reg: User
+    @requestBody({ required: true }) reg: RegisterRq
   ): Promise<User> {
     return await accountService.register(reg.username, reg.password);
   }

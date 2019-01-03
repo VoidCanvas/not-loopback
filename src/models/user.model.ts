@@ -1,8 +1,11 @@
 import {
   Entity,
   Column,
+  property
 } from '../core';
 import { BaseEntity } from './';
+import { OneToOne } from 'typeorm';
+import { UserDetails } from './user-details.model';
 
 @Entity('users', { schema: 'public' })
 export class User extends BaseEntity<User> {
@@ -27,4 +30,8 @@ export class User extends BaseEntity<User> {
     nullable: false,
   })
   password: string;
+
+  @property()
+  @OneToOne(type => UserDetails, details => details.user)
+  details: UserDetails;
 }

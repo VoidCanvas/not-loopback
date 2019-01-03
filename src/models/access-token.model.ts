@@ -1,7 +1,7 @@
 import { Entity, Column } from '../core';
 import { BaseEntity } from './';
 
-@Entity()
+@Entity('access_token')
 export class AccessToken extends BaseEntity<AccessToken> {
   @Column({ primary: true }) id: string;
   @Column() token: string;

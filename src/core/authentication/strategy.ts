@@ -37,7 +37,10 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
       }
     });
     if (accessToken) {
-      const user = await User.findById<User>(accessToken.userId);
+      const user = await User.findOne<User>({
+        where: { id: accessToken.userId },
+        relations: ['details']
+      });
       cb(null, (user || false));
     }
     cb(null, false) // when auth token found

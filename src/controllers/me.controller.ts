@@ -16,6 +16,7 @@ export class MeController {
     responses: {
       '200': {
         description: 'To get the current user',
+        content: { 'application/json': { schema: { 'x-ts-type': User } } },
       },
     },
   })

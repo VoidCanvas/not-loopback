@@ -1,7 +1,7 @@
 import { model, property } from '../../core';
 
 @model()
-export class LoginRq {
+export class RegisterRq {
   @property() username: string;
   @property() password: string;
 }
