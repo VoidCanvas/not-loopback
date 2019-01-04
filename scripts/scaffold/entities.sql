@@ -42,3 +42,45 @@ CREATE TABLE access_token (
     type access_token_type default 'DEFAULT',
     UNIQUE(id)
 );
+
+DROP TABLE IF EXISTS capability;
+CREATE TABLE capability (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR NOT NULL,
+    description VARCHAR,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(id),
+    UNIQUE(name)
+);
+
+DROP TABLE IF EXISTS role;
+CREATE TABLE role (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR NOT NULL,
+    description VARCHAR,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(id),
+    UNIQUE(name)
+);
+
+DROP TABLE IF EXISTS role_capability_maping;
+CREATE TABLE role_capability_maping (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    role_id UUID NOT NULL REFERENCES role(id),
+    capability_id UUID NOT NULL REFERENCES capability(id),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(id)
+);
+
+DROP TABLE IF EXISTS user_role_maping;
+CREATE TABLE user_role_maping (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    role_id UUID NOT NULL REFERENCES role(id),
+    user_id UUID NOT NULL REFERENCES users(id),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unq_user_role_mapping UNIQUE(role_id,user_id)
+);

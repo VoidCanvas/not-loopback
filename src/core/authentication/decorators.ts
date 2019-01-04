@@ -1,7 +1,7 @@
-import { Roles } from './roles-enum';
+import { Capability } from './roles-enum';
 import { authenticate } from '@loopback/authentication';
 export interface RoleBasedAuth {
-  roles: Roles[]
+  capability: Capability
 }
 
 export function auth(spec?: RoleBasedAuth): MethodDecorator {

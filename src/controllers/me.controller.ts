@@ -2,6 +2,7 @@ import { User } from '../models';
 import { AuthenticationBindings } from '@loopback/authentication';
 import { auth, api, get } from '../core';
 import { inject } from '@loopback/context';
+import { Capability } from '../core/authentication/roles-enum';
 
 @api()
 export class MeController {
@@ -14,7 +15,9 @@ export class MeController {
     description: 'To get the current user',
     returnType: User
   })
-  @auth()
+  @auth({
+    capability: Capability.GET_OWN_INFO
+  })
   async me(): Promise<User> {
     return this.user;
   }

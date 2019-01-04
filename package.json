@@ -54,6 +54,7 @@
     "@loopback/rest-explorer": "^1.1.2",
     "@loopback/service-proxy": "^1.0.3",
     "bcrypt": "^3.0.2",
+    "lodash": "^4.17.11",
     "loopback-connector-postgresql": "^3.5.0",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
