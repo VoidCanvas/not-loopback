@@ -1,4 +1,5 @@
-import { User, AccessToken, UserDetails } from '../models';
+import { User, AccessToken, UserDetails, Role, UserRoleMapping } from '../models';
+import { Role as RoleEnum } from '../core/authentication/roles-enum';
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 import uuid = require('uuid');
 const BCRYPT_SALT_ROUNDS = 10;
@@ -13,6 +14,15 @@ export class AccountService {
     });
     await user.save();
     const details = new UserDetails({ userId: user.id });
+    const userRole = await Role.findOne<Role>({
+      where: { name: RoleEnum.USER }
+    });
+    if (userRole) {
+      await new UserRoleMapping({
+        userId: user.id,
+        roleId: userRole.id
+      }).save();
+    }
     await details.save();
     user.details = details;
     return user;
