@@ -13,7 +13,7 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
     private metadata: AuthenticationMetadata,
   ) {
   }
-
+  options: any; // tslint:disable-line
   value(): ValueOrPromise<Strategy | undefined> {
     // The function was not decorated, so we shouldn't attempt authentication
     if (!this.metadata) {
@@ -21,6 +21,7 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
     }
     const name = this.metadata.strategy;
     if (name === 'CustomStrategy') {
+      this.options = this.metadata.options;
       return new BearerStrategy(this.verify.bind(this));
     } else {
       return Promise.reject(`The strategy ${name} is not available.`);
@@ -31,6 +32,7 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
     token: string,
     cb: (err: Error | null, user?: User | false) => void,
   ) {
+    let _user = null;
     const accessToken = await AccessToken.findOne<AccessToken>({
       where: {
         token
@@ -39,10 +41,19 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
     if (accessToken) {
       const user = await User.findOne<User>({
         where: { id: accessToken.userId },
-        relations: ['details']
+        relations: ['details', 'roles']
       });
-      cb(null, (user || false));
+      if (user) {
+        const capabilityStrings = await user.getCapabilities();
+        if (this.options) {
+          if (capabilityStrings.includes(this.options.capability)) {
+            _user = user;
+          }
+        } else {
+          _user = user;
+        }
+      }
     }
-    cb(null, false) // when auth token found
+    cb(null, _user || false); // when auth token not found
   }
 }

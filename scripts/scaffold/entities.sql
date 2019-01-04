@@ -65,8 +65,8 @@ CREATE TABLE role (
     UNIQUE(name)
 );
 
-DROP TABLE IF EXISTS role_capability_maping;
-CREATE TABLE role_capability_maping (
+DROP TABLE IF EXISTS role_capability_mapping;
+CREATE TABLE role_capability_mapping (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     role_id UUID NOT NULL REFERENCES role(id),
     capability_id UUID NOT NULL REFERENCES capability(id),
@@ -75,8 +75,8 @@ CREATE TABLE role_capability_maping (
     UNIQUE(id)
 );
 
-DROP TABLE IF EXISTS user_role_maping;
-CREATE TABLE user_role_maping (
+DROP TABLE IF EXISTS user_role_mapping;
+CREATE TABLE user_role_mapping (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     role_id UUID NOT NULL REFERENCES role(id),
     user_id UUID NOT NULL REFERENCES users(id),

@@ -19,6 +19,6 @@ export class MeController {
     capability: Capability.GET_OWN_INFO
   })
   async me(): Promise<User> {
-    return this.user;
+    return this.user.toUiModel();
   }
 }

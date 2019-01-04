@@ -9,8 +9,8 @@ import { Capability } from './capability.model';
 import { User } from './user.model';
 
 @Entity({ name: 'user_role_mapping' })
-export class UserRoleMappingMapping extends BaseEntity<UserRoleMappingMapping> {
-  constructor(data?: Partial<UserRoleMappingMapping>) {
+export class UserRoleMapping extends BaseEntity<UserRoleMapping> {
+  constructor(data?: Partial<UserRoleMapping>) {
     super(data);
   }
 

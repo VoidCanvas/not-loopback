@@ -17,7 +17,9 @@ export class Capability extends BaseEntity<Capability> {
   })
   id: string;
 
+  @Column()
   name: string;
 
+  @Column()
   description?: string;
 }
