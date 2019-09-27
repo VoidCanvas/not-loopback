@@ -52,25 +52,25 @@ export function api(spec: CoreControllerApiSpec = new CoreControllerApiSpec()): 
 
 export function get(spec: CoreRouterSpec): MethodDecorator {
   const __get = _get(spec.path, createLb4OpenApiSpec(spec));
-  return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<{}>) => {
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
     __get(target, propertyKey, descriptor);
   }
 }
 export function post(spec: CoreRouterSpec): MethodDecorator {
   const __post = _post(spec.path, createLb4OpenApiSpec(spec));
-  return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<{}>) => {
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
     __post(target, propertyKey, descriptor);
   }
 }
 export function put(spec: CoreRouterSpec): MethodDecorator {
   const __put = _put(spec.path, createLb4OpenApiSpec(spec));
-  return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<{}>) => {
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
     __put(target, propertyKey, descriptor);
   }
 }
 export function del(spec: CoreRouterSpec): MethodDecorator {
   const __del = _del(spec.path, createLb4OpenApiSpec(spec));
-  return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<{}>) => {
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
     __del(target, propertyKey, descriptor);
   }
 }
