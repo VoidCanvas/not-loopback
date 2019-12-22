@@ -4,12 +4,13 @@ import {
   property
 } from '../core';
 import { BaseEntity, Capability } from './';
-import { OneToOne, OneToMany, ManyToMany, JoinTable, JoinColumn } from 'typeorm';
+import { OneToOne, ManyToMany, JoinTable } from 'typeorm';
 import { UserDetails } from './user-details.model';
 import { Role } from './role.model';
 import { UserRoleMapping } from './user-role-mapping.model';
 import { RoleCapabilityMapping } from './role-capability-mapping.model';
 import * as _ from 'lodash';
+import { AccessToken } from './access-token.model';
 
 @Entity('users', { schema: 'public' })
 export class User extends BaseEntity<User> {
@@ -38,6 +39,9 @@ export class User extends BaseEntity<User> {
   @property()
   @OneToOne(type => UserDetails, details => details.user)
   details: UserDetails;
+
+  // Fore reference, not for saving
+  accessToken?: AccessToken
 
   @ManyToMany(type => Role)
   @JoinTable({

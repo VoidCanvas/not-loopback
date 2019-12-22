@@ -44,6 +44,12 @@ export class UserDetails extends BaseEntity<UserDetails> {
   })
   lastName?: string;
 
+  @Column({
+    nullable: true,
+    name: 'avatar_url'
+  })
+  avatarURL?: string;
+
   @Column({ nullable: true })
   status?: string;
 

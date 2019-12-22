@@ -22,6 +22,7 @@ CREATE TABLE user_details (
     address VARCHAR DEFAULT '',
     first_name VARCHAR DEFAULT '',
     last_name VARCHAR DEFAULT '',
+    avatar_url VARCHAR DEFAULT '',
     status user_status default 'NOT_VERIFIED',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -35,6 +36,7 @@ DROP TABLE IF EXISTS access_token;
 CREATE TABLE access_token (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     token VARCHAR NOT NULL,
+    refresh_token VARCHAR,
     user_id UUID NOT NULL REFERENCES users (id),
     ttl INTEGER NOT NULL DEFAULT 100000,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
