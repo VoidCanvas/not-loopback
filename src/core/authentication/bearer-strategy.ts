@@ -44,6 +44,7 @@ export class CustomAuthStrategyProvider implements Provider<Strategy | undefined
         relations: ['details', 'roles']
       });
       if (user) {
+        user.accessToken = accessToken;
         const capabilityStrings = await user.getCapabilities();
         if (this.options) {
           if (capabilityStrings.includes(this.options.capability)) {

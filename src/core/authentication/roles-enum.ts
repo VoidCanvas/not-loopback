@@ -13,3 +13,11 @@ export enum Role {
   SUPER_ADMIN = "SUPER_ADMIN",
   USER = "USER",
 }
+
+export enum AccessTokenType {
+  FACEBOOK = "FACEBOOK",
+  TWITTER = "TWITTER",
+  GOOGLE = "GOOGLE",
+  LINKEDIN = "LINKEDIN",
+  DEFAULT = "DEFAULT",
+}

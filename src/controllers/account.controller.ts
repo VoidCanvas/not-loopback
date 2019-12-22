@@ -4,14 +4,10 @@ import {
 } from '@loopback/rest';
 import { User, LoginRq, AccessToken, RegisterRq } from '../models';
 import { accountService } from '../services/account.service';
-import { api, post, auth } from '../core';
-import { Capability } from '../core/authentication/roles-enum';
+import { api, post } from '../core';
 
 @api()
 export class AccountController {
-  @auth({
-    capability: Capability.ROLE_ASSIGNMENT
-  })
   @post({
     path: '/register',
     description: 'To register a new user',

@@ -10,3 +10,10 @@ export function auth(spec?: RoleBasedAuth): MethodDecorator {
     customAuthentication(target, propertyKey, descriptor);
   }
 }
+
+export function facebookAuth(spec?: RoleBasedAuth): MethodDecorator {
+  const customAuthentication = authenticate('FacebookStrategy', spec);
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+    customAuthentication(target, propertyKey, descriptor);
+  }
+}
