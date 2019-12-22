@@ -2,5 +2,12 @@
   "datasource": {
     "default": "postgres"
   },
-  "apiBasePath": "/api"
+  "apiBasePath": "/api",
+  "social": {
+    "facebook": {
+      "clientID": "string",
+      "clientSecret": "string",
+      "callbackURL": "string",
+    }
+  }
 }

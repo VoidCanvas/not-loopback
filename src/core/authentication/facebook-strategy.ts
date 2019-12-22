@@ -8,12 +8,9 @@ import { Strategy as FacebookStrategy, StrategyOption, Profile } from 'passport-
 import { AccessToken, User } from '../../models';
 import { accountService } from '../../services';
 import { AccessTokenType } from './roles-enum';
+import * as config from '../../config.json';
 
-const strategyOptions: StrategyOption = {
-  clientID: "string",
-  clientSecret: "string",
-  callbackURL: "string",
-}
+const strategyOptions: StrategyOption = config.social.facebook;
 
 export class CustomAuthStrategyProvider implements Provider<Strategy | undefined> {
   constructor(
