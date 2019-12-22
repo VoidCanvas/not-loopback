@@ -63,3 +63,4 @@ api-docs/
 # Transpiled JavaScript files from Typescript
 /dist
 .vscode/symbols.json
+private-config.json
